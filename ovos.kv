@@ -1,0 +1,316 @@
+#:kivy 1.9.0
+
+
+##########################################	
+<OvosSet>:
+	
+	# Настройки
+	
+	round: _round
+	rectangular: _rectangular
+	hot: _hot
+	cold: _cold
+	w0: _W0
+	v1: _V1
+	cmxm: _CmXm
+	_pdv: _PDV
+	ovosinput: root.manager.ovosinput
+	
+
+
+
+	ScrollView:
+		
+		GridLayout:
+					
+			orientation: "vertical"
+			cols: 1
+			size_hint_y: None
+			height: self.minimum_height
+			BoxLayout:
+				orientation: "vertical"
+
+				size_hint_y: None
+				
+				Label:
+					text: 'Вид источника:'
+					color: 0,0,0,1
+					size_hint_y: None
+
+			BoxLayout:
+				orientation: "horizontal"
+				size_hint_y: None
+				ToggleButton:
+					id: _round
+					text: 'круглый'
+					
+					halign: "center"
+					text_size: self.width, None
+					padding: 10, 10
+
+					allow_no_selection: False
+					group: 'Vid Istochnika'
+					state: 'down'
+
+				ToggleButton:
+					id: _rectangular
+					text: 'прямоугольный'
+
+					halign: "center"
+					text_size: self.width, None
+					padding: 10, 10
+
+					allow_no_selection: False
+					group: 'Vid Istochnika'
+
+			BoxLayout:
+				orientation: "horizontal"
+				size_hint_y: None
+
+				ToggleButton:
+					id: _hot
+					text: 'горячий'
+					
+					halign: "center"
+					text_size: self.width, None
+					padding: 10, 10
+
+					allow_no_selection: False
+					group: 'Temperature'
+					state: 'down'
+
+				ToggleButton:
+					id: _cold
+					text: 'холодный'
+
+					halign: "center"
+					text_size: self.width, None
+					padding: 10, 10
+
+					allow_no_selection: False
+					group: 'Temperature'
+
+			BoxLayout:
+				orientation: "vertical"
+
+				size_hint_y: None
+				
+				Label:
+					text: 'Известно:'
+					color: 0,0,0,1
+					size_hint_y: None
+
+			BoxLayout:
+				orientation: "horizontal"
+				size_hint_y: None
+
+				ToggleButton:
+					id: _W0
+					text: 'W[sub]0[/sub]'
+					markup: True
+					
+					halign: "center"
+					text_size: self.width, None
+					padding: 10, 10
+
+					allow_no_selection: False
+					group: 'dannie'
+					state: 'down'
+
+				ToggleButton:
+					id: _V1
+					text: 'V[sub]1[/sub]'
+					markup: True
+
+
+					halign: "center"
+					text_size: self.width, None
+					padding: 10, 10
+
+					allow_no_selection: False
+					group: 'dannie'
+
+			BoxLayout:
+				orientation: "vertical"
+
+				size_hint_y: None
+				
+				Label:
+					text: 'Найти:'
+					color: 0,0,0,1
+					size_hint_y: None
+
+			BoxLayout:
+				orientation: "horizontal"
+				size_hint_y: None
+				Label:
+					text: 'C[sub]m[/sub], X[sub]m[/sub]:'
+					color: 0,0,0,1
+					markup: True
+					size_hint_y: None
+				Switch:
+					id: _CmXm
+
+			BoxLayout:
+				orientation: "horizontal"
+				size_hint_y: None
+				Label:
+					text: 'ПДВ:'
+					color: 0,0,0,1
+					markup: True
+					size_hint_y: None
+				Switch:
+					id: _PDV
+
+			BoxLayout:
+			
+				size_hint_y: None
+				Button:
+					text: 'Применить'
+					background_color: 0.16, 0.5, 0.725, 0.8
+
+					on_release:
+		
+						root.apply()
+						root.manager.current = '_ovosinput'
+
+##########################################		
+
+<OvosInput>:
+	# Входные Данные
+	layout: _layout
+
+	ScrollView:
+		
+		GridLayout:
+		
+			orientation: "vertical"
+			cols: 1
+			size_hint_y: None
+			height: self.minimum_height
+		
+			GridLayout:
+				
+				
+				cols:2
+				padding: 5, 5
+				size_hint_y: None
+				height: self.minimum_height
+				id: _layout
+				#############
+				#############
+				
+
+			BoxLayout:
+			
+				size_hint_y: None
+				Button:
+					text: 'Вычислить'
+					background_color: 0.16, 0.5, 0.725, 0.8
+					on_press: 
+						root.calculate()
+
+		
+##########################################	
+
+<MainClass>:
+	
+	# Главный класс-объект
+	id: _main_class
+	screen_manager: _screen_manager
+	
+	canvas.before:
+	
+		# Белый фон
+        Color:
+            rgba: 1, 1, 1, 1
+			
+        Rectangle:
+            pos: self.pos
+            size: self.size
+			
+			
+	FloatLayout:
+	
+		orientation: "vertical"
+        width: root.width
+		height: root.height
+
+		AnchorLayout:
+			# 3 кнопки наверху
+			anchor_x: 'center'
+			anchor_y: 'top'
+			width: root.width
+			height: root.height / 2
+
+			BoxLayout:
+				orientation: 'horizontal'
+				size_hint: 1, .1
+				
+			    # Вместо ImageButton - Button
+				ImageButton:
+					text: '1'
+					source: 'images/set.png'
+					background_color: 0.16, 0.84, 0.396, 0.8
+					border: 16, 16, 16, 16
+					on_press: _screen_manager.current = '_ovosset'
+				ImageButton:
+					text: '2'
+					source: 'images/input.png'
+					background_color: 0.16, 0.84, 0.396, 0.8
+					on_press: _screen_manager.current = '_ovosinput'
+				ImageButton:
+					text: '3'
+					source: 'images/result.png'
+					background_color: 0.16, 0.84, 0.396, 0.8
+					on_press: _screen_manager.current = '_result'
+					
+		
+        ScreenManager:
+            id: _screen_manager
+            name: "screen_manager"
+			size_hint: 1, .9
+			ovosinput: _ovosinput
+			ovosset: _ovosset
+			result: _result
+			OvosSet:
+				id: _ovosset
+				name: "_ovosset"
+			OvosInput:
+				id: _ovosinput
+				name: "_ovosinput"
+			Screen:
+				# Экран выхода
+				name: "_result"
+				
+				ScrollView:
+					Label: 
+						id: _result
+						text: "Программа для решения задач по дисциплине ОВОС(атмосфера)\nВычисление Cm, Xm, ПДВ\n[b]Автор[/b]: Азат Маннанов (БОС-12-31)\n© 2015-2016"
+						color: 0,0,0,1
+						halign: 'justify'
+						valign: 'middle'
+						size_hint_y: None
+						text_size: self.width, None
+						height: self.texture_size[1]
+						markup: True
+		
+##########################################	
+	
+
+# кнопка - картинка
+<ImageButton@ButtonBehavior+Image>
+	canvas.before:
+        Color:
+            rgba: 0, 0.302, 0.25, 1
+			
+        Rectangle:
+            pos: self.pos
+            size: self.size
+	# белая полоска
+	canvas:
+        Color:
+            rgba: 1, 1, 1, .9
+        Line:
+            width: 1
+            points: self.x, self.y, self.x, self.y * 2
