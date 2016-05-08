@@ -255,14 +255,14 @@ A, M, F, self.m, self.n, nu, self.H, self.V1, self.dT, self.Cm)
             (self.A * self.F * self.n * self.nu * self.D),3)
             self.label += 'ПДВ = ((ПДК - C[sub]ф[/sub]) · H[sup]4/3[/sup] · 8 · V[sub]1[/sub]) / \
 (A · F · n · η · D) =(({} - {}) · {}[sup]4/3[/sup] · 8 · {}) / \
-({} · {} · {} · {} · {}) = {} мг/м[sup]3[/sup]'.format(
+({} · {} · {} · {} · {}) = {} мг/с'.format(
             pdk, Cf, self.H, self.V1, self.A, self.F, self.n, self.nu, self.D, self.pdv)
         else:
             self.pdv = round(((pdk - Cf) * self.H ** 2 * (self.V1 * self.dT) ** (1.0 / 3)) / \
             (self.A * self.F * self.m * self.n * self.nu),3)
             self.label += "ПДВ = ((ПДК - C[sub]ф[/sub]) · H[sup]2[/sup]) / (A · F · m · n · η ) · \
 3√(V[sub]1[/sub] · ΔT) = (({} - {}) · {}[sup]2[/sup]) / ({} · {} · {} · {} · {} ) · \
-3√({} · {}) = {} мг/м[sup]3[/sup]\n".format(pdk, Cf, self.H,  self.A, self.F, self.m, self.n, self.nu, self.V1,
+3√({} · {}) = {} мг/с\n".format(pdk, Cf, self.H,  self.A, self.F, self.m, self.n, self.nu, self.V1,
 self.dT, self.pdv)
 
 
